@@ -9,8 +9,8 @@ class ProductController extends Controller
 {
     Public Function index()
     {
-        $product = product ::all();
+        $products = product ::paginate(9);
 
-        dd($products);
+        return view('products.index', compact('products'));
     }
 }
