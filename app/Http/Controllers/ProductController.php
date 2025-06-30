@@ -9,7 +9,7 @@ class ProductController extends Controller
 {
     Public Function index()
     {
-        $products = product ::paginate(9);
+        $products = Product ::paginate(9);
 
         return view('products.index', compact('products'));
     }
@@ -21,15 +21,20 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'nama' => 'required',
-            'harga' => 'required|numeric'
+            'harga' => 'required|numeric',
+            'foto' => 'required|image|mimes:jpeg,png,jpg'
         ]);
 
-        product::create([
+        $foto = $request ->file('foto');
+        $foto->storeAs('public', $foto->hashName());
+
+        Product::create([
             'nama' => $request->nama,
             'harga' => $request->harga,
-            'deskripsi' => $request->deskripsi
+            'deskripsi' => $request->deskripsi,
+            'foto' => $foto->hashname()
         ]);
 
         return redirect()->route('products.index')->with('success', 'Add Product Success');
