@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->integer('harga');
             $table->string('deskripsi')->nullable();
-            $table->string('foto')->default('noimage.png');
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }

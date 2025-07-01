@@ -16,7 +16,7 @@
             <div class="grid md:grid-cols-3 grid-cols-1 mt-4 gap-6">
                 @foreach ($products as $product)
                     <div>
-                        <img src="{{ url('storage/'.$product->foto) }}">
+                        <img src="{{ $product->foto ? url('storage/product/'.$product->foto) : asset('assets/noimage.png') }}">
                         <div class="my-2">
                             <p class="text-xl font-light">{{ $product->nama }}</p>
                             <p class="font-semibold text-gray-400">Rp. {{ number_format($product->harga) }}</p>
