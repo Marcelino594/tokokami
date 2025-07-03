@@ -43,4 +43,45 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with('success', 'Add Product Success');
     }
+
+    public function edit(Product $product)
+    {
+        return view('products.edit', compact('product'));
+    }
+
+
+    public function update(Request $request, Product $product)
+    {
+    $request->validate([
+        'nama' => 'required',
+        'harga' => 'required|numeric',
+    ]);
+
+    // Update data biasa
+    $product->nama = $request->nama;
+    $product->harga = $request->harga;
+    $product->deskripsi = $request->deskripsi;
+
+    // Jika ada upload gambar baru
+    if ($request->hasFile('foto')) {
+
+        // Hapus foto lama jika ada
+        if ($product->foto && Storage::disk('public')->exists('product/' . $product->foto)) {
+            Storage::disk('public')->delete('product/' . $product->foto);
+        }
+
+        // Simpan foto baru
+        $foto = $request->file('foto');
+        $fotoName = $foto->hashName();
+        Storage::disk('public')->putFileAs('product', $foto, $fotoName);
+
+        // Update nama foto di DB
+        $product->foto = $fotoName;
+    }
+
+    $product->save(); // Gunakan save() karena kamu update manual field-nya
+
+    return redirect()->route('products.index')->with('success', 'Update Product Success');
+    }
+
 }
