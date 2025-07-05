@@ -1,8 +1,9 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 px-2">
 
-        <div class="flex mt-6">
+        <div class="flex mt-6 justify-between items-center">
             <h2 class="font-semibold text-xl">Edit Product</h2>
+             @include('products.partials.delete-product')
         </div>
 
         <div class="mt-4" x-data="{ imageUrl: '' }" x-init="imageUrl = '{{ $product->foto ? asset('storage/product/' . $product->foto) : asset('assets/noimage.png') }}'">
