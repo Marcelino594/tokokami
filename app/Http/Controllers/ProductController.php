@@ -57,6 +57,8 @@ class ProductController extends Controller
         'harga' => 'required|numeric',
     ]);
 
+    //dd(str_replace(".", "",$request->harga));
+
     // Update data biasa
     $product->nama = $request->nama;
     $product->harga = $request->harga;
